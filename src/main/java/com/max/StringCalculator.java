@@ -1,12 +1,16 @@
 package com.max;
 
-public class StringCalculator
-{
-    public int Add(String s) {
-        if (!s.isBlank()) {
-            return Integer.parseInt(s);
+public class StringCalculator {
+
+    public int Add(String input) {
+        int sum = 0;
+        if (!input.isBlank()) {
+            var stringArr = input.split("\\D");
+            for (String s : stringArr) {
+                sum += Integer.parseInt(s);
+            }
         }
-        return 0;
+        return sum;
     }
 
 }

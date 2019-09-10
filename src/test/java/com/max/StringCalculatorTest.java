@@ -1,12 +1,11 @@
 package com.max;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class StringCalculatorTest
-{
+public class StringCalculatorTest {
+
     @Test
     public void testAddEmptyReturnsZero()
     {
@@ -15,9 +14,30 @@ public class StringCalculatorTest
     }
 
     @Test
-    public void testAddNumberReturnsThatNumber()
+    public void testAddANumberReturnsThatNumber()
     {
         StringCalculator calculator = new StringCalculator();
         assertEquals(3, calculator.Add("3"));
+    }
+
+    @Test
+    public void testAddingTwoNumbersReturnsTheSum()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(8, calculator.Add("3,5"));
+    }
+
+    @Test
+    public void testAddingManyNumbersReturnsTheSum()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(20, calculator.Add("3,5,3,9"));
+    }
+
+    @Test
+    public void testNewLineBreaksAndCommasAreInterchangeable()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(20, calculator.Add("3\n5\n3,9"));
     }
 }
