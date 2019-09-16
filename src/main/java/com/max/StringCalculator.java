@@ -14,19 +14,26 @@ public class StringCalculator {
         String delimiter = "[,\n]";
 
         if (input.startsWith("//")) {
-            int endOfDelimiter = input.indexOf('\n');
             delimiter = "";
+            int endOfDelimiterChanger = input.indexOf('\n');
 
-            for (int i = 2; i < endOfDelimiter; i++) {
-                delimiter += input.charAt(i);
+            if (input.charAt(endOfDelimiterChanger - 1) == ']') {
+                String delimiterChange = input.substring(3, endOfDelimiterChanger - 1);
+                var delimiterArr = delimiterChange.split("\\Q][\\E");
+
+                for (String s : delimiterArr) {
+                    delimiter = delimiter + "\\Q" + s + "\\E";
+                }
+
+                if (delimiterArr.length > 1) {
+                    delimiter = "[" + delimiter + "]";
+                }
+            } else {
+                delimiter = input.substring(2, endOfDelimiterChanger);
             }
 
-            if (delimiter.length() > 1) {
-                delimiter = delimiter.substring(delimiter.indexOf('[') + 1, delimiter.indexOf(']'));
-                delimiter = "\\Q" + delimiter + "\\E";
-            }
+            input = input.substring(endOfDelimiterChanger + 1);
 
-            input = input.substring(endOfDelimiter + 1);
         }
 
         var stringArr = input.split(delimiter);
