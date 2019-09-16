@@ -24,7 +24,10 @@ public class StringCalculator {
             if (s.contains("-")) {
                 throw new NegativesException("Negatives not allowed: " + s);
             }
+            int number = Integer.parseInt(s);
+            if (number < 1000) {
                 sum += Integer.parseInt(s);
+            }
         }
 
         return sum;
