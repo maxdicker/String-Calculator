@@ -14,8 +14,20 @@ public class StringCalculator {
         String delimiter = "[,\n]";
 
         if (input.charAt(0) == '/') {
-            delimiter = "[" + input.charAt(2) + "]";
-            input = input.substring(4);
+            int endOfDelimiter = input.indexOf('\n');
+
+            delimiter = "";
+
+            for (int i = 2; i < endOfDelimiter; i++) {
+                delimiter += input.charAt(i);
+            }
+
+            input = input.substring(endOfDelimiter + 1);
+
+            if (delimiter.length() > 1) {
+                delimiter = delimiter.substring(delimiter.indexOf('[') + 1, delimiter.indexOf(']'));
+                delimiter = "\\Q" + delimiter + "\\E";
+            }
         }
 
         var stringArr = input.split(delimiter);
