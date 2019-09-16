@@ -61,4 +61,11 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         assertEquals(2, calculator.Add("1000,1001,2"));
     }
+
+    @Test
+    public void testAddMethodSupportsLongDelimiters()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.Add("//[***]\n1***2***3"));
+    }
 }
