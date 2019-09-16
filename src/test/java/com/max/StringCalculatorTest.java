@@ -54,4 +54,11 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         calculator.Add("-1,2,-3");
     }
+
+    @Test
+    public void testAddMethodIgnoresNumbersGreaterThan999()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(2, calculator.Add("1000,1001,2"));
+    }
 }

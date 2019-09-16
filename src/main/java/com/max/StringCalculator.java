@@ -24,9 +24,7 @@ public class StringCalculator {
             if (s.contains("-")) {
                 throw new NegativesException("Negatives not allowed: " + s);
             }
-            if (!s.isBlank()) {
                 sum += Integer.parseInt(s);
-            }
         }
 
         return sum;
