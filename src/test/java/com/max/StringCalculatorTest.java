@@ -82,4 +82,11 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         assertEquals(10, calculator.Add("//[***][#][%]\n1***2#3%4"));
     }
+
+    @Test
+    public void testDetermineCustomDelimiter()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals("\\Q***\\E", calculator.determineCustomDelimiter("//[***][#][%]\n1***2#3%4"));
+    }
 }
