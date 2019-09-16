@@ -84,9 +84,10 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void testDetermineCustomDelimiter()
+    public void testAddMethodHandlesDelimitersWhichContainNumbers()
     {
         StringCalculator calculator = new StringCalculator();
-        assertEquals("\\Q***\\E", calculator.determineCustomDelimiter("//[***][#][%]\n1***2#3%4"));
+        assertEquals(6, calculator.Add("//[*1*][%]\n1*1*2%3"));
     }
+
 }

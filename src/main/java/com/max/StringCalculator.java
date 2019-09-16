@@ -10,18 +10,42 @@ public class StringCalculator {
     }
 
     private int AddNonEmptyInput(String input) throws NegativesException {
-        int sum = 0;
         String delimiter = "[,\n]";
         int expressionStartingIndex = 0;
 
         if (input.startsWith("//")) {
-            delimiter = determineCustomDelimiter(input);
-
+            delimiter = DetermineCustomDelimiter(input);
             expressionStartingIndex  = input.indexOf('\n') + 1;
-
         }
 
         var expressionArr = input.substring(expressionStartingIndex).split(delimiter);
+
+        return AddStringArray(expressionArr);
+    }
+
+    private String DetermineCustomDelimiter(String input) {
+        String customDelimiter = "";
+        int endOfDelimiterExpression = input.indexOf('\n');
+
+        if (input.charAt(endOfDelimiterExpression - 1) == ']') {
+            String delimiterExpression = input.substring(3, endOfDelimiterExpression - 1);
+            var delimiterArr = delimiterExpression.split("\\Q][\\E");
+
+            for (String s : delimiterArr) {
+                customDelimiter = customDelimiter + "|" + "\\Q" + s + "\\E";
+            }
+
+            customDelimiter = customDelimiter.substring(1);
+
+        } else {
+            customDelimiter = input.substring(2, endOfDelimiterExpression);
+        }
+
+        return customDelimiter;
+    }
+
+    private int AddStringArray(String[] expressionArr) {
+        int sum = 0;
 
         for (String s : expressionArr) {
             if (s.contains("-")) {
@@ -34,30 +58,6 @@ public class StringCalculator {
         }
 
         return sum;
-    }
-
-    public String determineCustomDelimiter(String input) {
-        String customDelimiter = "";
-        int endOfDelimiterChanger = input.indexOf('\n');
-
-        if (input.charAt(endOfDelimiterChanger - 1) == ']') {
-            String delimiterChange = input.substring(3, endOfDelimiterChanger - 1);
-            var delimiterArr = delimiterChange.split("\\Q][\\E");
-
-            for (String s : delimiterArr) {
-                customDelimiter = customDelimiter + "\\Q" + s + "\\E" + "|";
-            }
-
-            customDelimiter = customDelimiter.substring(0, customDelimiter.length() - 1);
-//            [\Q***\E|\Q%\E|]
-            if (delimiterArr.length > 1) {
-                customDelimiter = "[" + customDelimiter + "]";
-            }
-
-        } else {
-            customDelimiter = input.substring(2, endOfDelimiterChanger);
-        }
-        return customDelimiter;
     }
 
 }
