@@ -13,21 +13,20 @@ public class StringCalculator {
         int sum = 0;
         String delimiter = "[,\n]";
 
-        if (input.charAt(0) == '/') {
+        if (input.startsWith("//")) {
             int endOfDelimiter = input.indexOf('\n');
-
             delimiter = "";
 
             for (int i = 2; i < endOfDelimiter; i++) {
                 delimiter += input.charAt(i);
             }
 
-            input = input.substring(endOfDelimiter + 1);
-
             if (delimiter.length() > 1) {
                 delimiter = delimiter.substring(delimiter.indexOf('[') + 1, delimiter.indexOf(']'));
                 delimiter = "\\Q" + delimiter + "\\E";
             }
+
+            input = input.substring(endOfDelimiter + 1);
         }
 
         var stringArr = input.split(delimiter);
