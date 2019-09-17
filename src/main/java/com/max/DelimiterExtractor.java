@@ -4,9 +4,8 @@ public class DelimiterExtractor {
 
     public String getCustomDelimiterRegex (String input) {
         String[] delimiterArr;
-        int endOfDelimiterExpression = input.indexOf('\n');
 
-        if (input.charAt(endOfDelimiterExpression - 1) == ']') {
+        if (hasLengthyOrMultipleDelimiters(input)) {
             delimiterArr = getDelimiters(input);
         } else {
             delimiterArr = new String[] {String.valueOf(input.charAt(2))};
@@ -30,6 +29,10 @@ public class DelimiterExtractor {
         }
 
         return regex.substring(1);
+    }
+
+    private boolean hasLengthyOrMultipleDelimiters(String input) {
+        return input.charAt(input.indexOf('\n') - 1) == ']';
     }
 
 }
