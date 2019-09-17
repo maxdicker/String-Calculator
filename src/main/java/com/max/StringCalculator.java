@@ -9,26 +9,26 @@ public class StringCalculator {
 
     public int Add(String input) {
         if (!input.isBlank()) {
-                return AddNonEmptyInput(input);
+                return addNonEmptyInput(input);
         }
         return 0;
     }
 
-    private int AddNonEmptyInput(String input) throws NegativesException {
+    private int addNonEmptyInput(String input) throws NegativesException {
         String delimiter = "[,\n]";
         int expressionStartingIndex = 0;
 
         if (input.startsWith("//")) {
-            delimiter = extractor.DetermineCustomDelimiter(input);
+            delimiter = extractor.getCustomDelimiter(input);
             expressionStartingIndex  = input.indexOf('\n') + 1;
         }
 
         var expressionArr = input.substring(expressionStartingIndex).split(delimiter);
 
-        return AddStringArray(expressionArr);
+        return addStringArray(expressionArr);
     }
 
-    private int AddStringArray(String[] expressionArr) {
+    private int addStringArray(String[] expressionArr) {
         int sum = 0;
 
         for (String s : expressionArr) {
