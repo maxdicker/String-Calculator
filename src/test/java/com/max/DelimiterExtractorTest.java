@@ -14,15 +14,15 @@ public class DelimiterExtractorTest {
     }
 
     @Test
-    public void canReturnBasicDelimiter()
+    public void returnsBasicDelimiter()
     {
-        assertEquals(";", extractor.getCustomDelimiter("//;\n1;2"));
+        assertEquals("\\Q;\\E", extractor.getCustomDelimiterRegex("//;\n1;2"));
     }
 
     @Test
     public void canReturnLengthyDelimiter()
     {
-        assertEquals("\\Q***\\E", extractor.getCustomDelimiter("//[***]\n1***2***3"));
+        assertEquals("\\Q***\\E", extractor.getCustomDelimiterRegex("//[***]\n1***2***3"));
     }
 
     @Test
@@ -35,5 +35,10 @@ public class DelimiterExtractorTest {
         assertEquals("qwerty", delimiters[1]);
     }
 
-    
+    @Test
+    public void canMakeRegexFromBasicDelimiter()
+    {
+        String[] delimiters = {";"};
+        assertEquals("\\Q;\\E", extractor.transformDelimitersToRegex(delimiters));
+    }
 }

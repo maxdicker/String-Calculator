@@ -19,7 +19,7 @@ public class StringCalculator {
         int expressionStartingIndex = 0;
 
         if (input.startsWith("//")) {
-            delimiter = extractor.getCustomDelimiter(input);
+            delimiter = extractor.getCustomDelimiterRegex(input);
             expressionStartingIndex  = input.indexOf('\n') + 1;
         }
 

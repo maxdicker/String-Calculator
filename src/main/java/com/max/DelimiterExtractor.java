@@ -2,30 +2,34 @@ package com.max;
 
 public class DelimiterExtractor {
 
-    public String getCustomDelimiter(String input) {
-        String customDelimiter = "";
+    public String getCustomDelimiterRegex (String input) {
+        String[] delimiterArr;
         int endOfDelimiterExpression = input.indexOf('\n');
 
         if (input.charAt(endOfDelimiterExpression - 1) == ']') {
-            var delimiterArr = getDelimiters(input);
-
-            for (String s : delimiterArr) {
-                customDelimiter = customDelimiter + "|" + "\\Q" + s + "\\E";
-            }
-
-            customDelimiter = customDelimiter.substring(1);
-
+            delimiterArr = getDelimiters(input);
         } else {
-            customDelimiter = input.substring(2, endOfDelimiterExpression);
+            delimiterArr = new String[] {String.valueOf(input.charAt(2))};
         }
 
-        return customDelimiter;
+        return transformDelimitersToRegex(delimiterArr);
     }
 
-    public String[] getDelimiters(String input) {
+    public String[] getDelimiters (String input) {
         int endOfDelimiterExpression = input.indexOf('\n');
 
         String delimiterExpression = input.substring(3, endOfDelimiterExpression - 1);
         return delimiterExpression.split("\\Q][\\E");
     }
+
+    public String transformDelimitersToRegex(String[] delimiters) {
+        String regex = "";
+
+        for (String s : delimiters) {
+            regex = regex + "|" + "\\Q" + s + "\\E";
+        }
+
+        return regex.substring(1);
+    }
+
 }
