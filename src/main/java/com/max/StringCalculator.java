@@ -9,35 +9,36 @@ public class StringCalculator {
 
     public int Add(String input) {
         if (!input.isBlank()) {
-                return addNonEmptyInput(input);
+            return addNonEmptyString(input);
         }
         return 0;
     }
 
-    private int addNonEmptyInput(String input) throws NegativesException {
+    private int addNonEmptyString(String input) throws NegativesException {
         String delimiter = "[,\n]";
+        //Thinking it may be better to split input on \n, and pass the delimiter section to delimiter extractor and other half to adding function. The adding function already only takes one half anyway...
         int expressionStartingIndex = 0;
 
         if (input.startsWith("//")) {
-            delimiter = extractor.getCustomDelimiterRegex(input);
+            delimiter = extractor.generateCustomDelimiterRegex(input);
             expressionStartingIndex  = input.indexOf('\n') + 1;
         }
 
         var expressionArr = input.substring(expressionStartingIndex).split(delimiter);
 
-        return addStringArray(expressionArr);
+        return addArrayOfStrings(expressionArr);
     }
 
-    private int addStringArray(String[] expressionArr) {
+    private int addArrayOfStrings(String[] expressionArr) {
         int sum = 0;
 
         for (String s : expressionArr) {
-            if (s.contains("-")) {
-                throw new NegativesException("Negatives not allowed: " + s);
-            }
             int number = Integer.parseInt(s);
-            if (number < 1000) {
-                sum += Integer.parseInt(s);
+
+            if (number < 0) {
+                throw new NegativesException("Negatives not allowed: " + number);
+            } else if (number < 1000) {
+                sum += number;
             }
         }
 

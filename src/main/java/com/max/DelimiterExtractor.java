@@ -2,11 +2,11 @@ package com.max;
 
 public class DelimiterExtractor {
 
-    public String getCustomDelimiterRegex (String input) {
+    public String generateCustomDelimiterRegex(String input) {
         String[] delimiterArr;
 
         if (hasLengthyOrMultipleDelimiters(input)) {
-            delimiterArr = getDelimiters(input);
+            delimiterArr = extractDelimiters(input);
         } else {
             delimiterArr = new String[] {String.valueOf(input.charAt(2))};
         }
@@ -14,7 +14,7 @@ public class DelimiterExtractor {
         return transformDelimitersToRegex(delimiterArr);
     }
 
-    public String[] getDelimiters (String input) {
+    public String[] extractDelimiters(String input) {
         int endOfDelimiterExpression = input.indexOf('\n');
 
         String delimiterExpression = input.substring(3, endOfDelimiterExpression - 1);

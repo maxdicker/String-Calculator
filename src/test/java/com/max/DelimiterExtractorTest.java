@@ -9,26 +9,26 @@ public class DelimiterExtractorTest {
     private DelimiterExtractor extractor;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         extractor = new DelimiterExtractor();
     }
 
     @Test
-    public void returnsBasicDelimiter()
+    public void returnsBasicDelimiterRegex()
     {
-        assertEquals("\\Q;\\E", extractor.getCustomDelimiterRegex("//;\n1;2"));
+        assertEquals("\\Q;\\E", extractor.generateCustomDelimiterRegex("//;\n1;2"));
     }
 
     @Test
-    public void canReturnLengthyDelimiter()
+    public void canReturnLengthyDelimiterRegex()
     {
-        assertEquals("\\Q***\\E", extractor.getCustomDelimiterRegex("//[***]\n1***2***3"));
+        assertEquals("\\Q***\\E", extractor.generateCustomDelimiterRegex("//[***]\n1***2***3"));
     }
 
     @Test
     public void canExtractMultipleDelimiters()
     {
-        String[] delimiters = extractor.getDelimiters("//[asdf][qwerty]\n");
+        String[] delimiters = extractor.extractDelimiters("//[asdf][qwerty]\n");
 
         assertEquals(2, delimiters.length);
         assertEquals("asdf", delimiters[0]);
@@ -40,5 +40,19 @@ public class DelimiterExtractorTest {
     {
         String[] delimiters = {";"};
         assertEquals("\\Q;\\E", extractor.transformDelimitersToRegex(delimiters));
+    }
+
+    @Test
+    public void canMakeRegexFromLengthyDelimiter()
+    {
+        String[] delimiters = {"***"};
+        assertEquals("\\Q***\\E", extractor.transformDelimitersToRegex(delimiters));
+    }
+
+    @Test
+    public void canMakeRegexFromMultipleDelimiters()
+    {
+        String[] delimiters = {"***", ";", "$1$"};
+        assertEquals("\\Q***\\E|\\Q;\\E|\\Q$1$\\E", extractor.transformDelimitersToRegex(delimiters));
     }
 }
