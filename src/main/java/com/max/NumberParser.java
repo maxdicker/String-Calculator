@@ -7,7 +7,7 @@ public class NumberParser {
         return toIntArr(expression.split(regex));
     }
 
-    public String transformDelimitersToRegex(String[] delimiters) {
+    private String transformDelimitersToRegex(String[] delimiters) {
         String regex = "";
 
         for (String s : delimiters) {
@@ -17,7 +17,7 @@ public class NumberParser {
         return regex.substring(1);
     }
 
-    public int[] toIntArr(String[] strings) {
+    private int[] toIntArr(String[] strings) {
         int[] numbers = new int[strings.length];
         for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);

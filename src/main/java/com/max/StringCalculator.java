@@ -18,7 +18,7 @@ public class StringCalculator {
 
     private int addNonEmptyString(String input) throws NegativesException {
         String[] delimiters;
-        String expression = input;
+        String expression;
 
         if (input.startsWith("//")) {
             String[] inputArr = input.split("\n");
@@ -26,9 +26,10 @@ public class StringCalculator {
             expression = inputArr[1];
         } else {
             delimiters = new String[] {",", "\n"};
+            expression = input;
         }
 
-        var numbers = parser.getNumbersFromExpression(delimiters, expression);
+        int[] numbers = parser.getNumbersFromExpression(delimiters, expression);
 
         return sum(numbers);
     }
