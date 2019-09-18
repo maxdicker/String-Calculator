@@ -5,30 +5,30 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DelimiterExtractorTest {
-    private DelimiterExtractor extractor;
+public class DelimiterGeneratorTest {
+    private DelimiterGenerator extractor;
 
     @Before
     public void setUp() {
-        extractor = new DelimiterExtractor();
+        extractor = new DelimiterGenerator();
     }
 
     @Test
     public void returnsBasicDelimiterRegex()
     {
-        assertEquals("\\Q;\\E", extractor.generateCustomDelimiterRegex("//;\n1;2"));
+        assertEquals("\\Q;\\E", extractor.generateCustomDelimiterRegex("//;"));
     }
 
     @Test
     public void canReturnLengthyDelimiterRegex()
     {
-        assertEquals("\\Q***\\E", extractor.generateCustomDelimiterRegex("//[***]\n1***2***3"));
+        assertEquals("\\Q***\\E", extractor.generateCustomDelimiterRegex("//[***]"));
     }
 
     @Test
     public void canExtractMultipleDelimiters()
     {
-        String[] delimiters = extractor.extractDelimiters("//[asdf][qwerty]\n");
+        String[] delimiters = extractor.extractDelimiters("//[asdf][qwerty]");
 
         assertEquals(2, delimiters.length);
         assertEquals("asdf", delimiters[0]);

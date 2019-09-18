@@ -1,10 +1,10 @@
 package com.max;
 
 public class StringCalculator {
-    private DelimiterExtractor extractor;
+    private DelimiterGenerator extractor;
 
     public StringCalculator() {
-        this.extractor = new DelimiterExtractor();
+        this.extractor = new DelimiterGenerator();
     }
 
     public int Add(String input) {
@@ -16,15 +16,15 @@ public class StringCalculator {
 
     private int addNonEmptyString(String input) throws NegativesException {
         String delimiter = "[,\n]";
-        //Thinking it may be better to split input on \n, and pass the delimiter section to delimiter extractor and other half to adding function. The adding function already only takes one half anyway...
-        int expressionStartingIndex = 0;
+        String expression = input;
 
         if (input.startsWith("//")) {
-            delimiter = extractor.generateCustomDelimiterRegex(input);
-            expressionStartingIndex  = input.indexOf('\n') + 1;
+            String[] inputArr = input.split("\n");
+            delimiter = extractor.generateCustomDelimiterRegex(inputArr[0]);
+            expression = inputArr[1];
         }
 
-        var expressionArr = input.substring(expressionStartingIndex).split(delimiter);
+        var expressionArr = expression.split(delimiter);
 
         return addArrayOfStrings(expressionArr);
     }
