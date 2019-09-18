@@ -16,7 +16,7 @@ public class NumberParserTest {
     @Test
     public void returnsNumbersWithBasicDelimiters()
     {
-        assertArrayEquals(new int[] {1, 2, 3}, parser.getNumbersFromExpression(new String[] {";"}, "1;2;3"));
+        assertArrayEquals(new int[] {-1, 2, 3}, parser.getNumbersFromExpression(new String[] {";"}, "-1;2;3"));
     }
 
     @Test

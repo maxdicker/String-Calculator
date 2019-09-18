@@ -17,30 +17,30 @@ public class StringCalculator {
     }
 
     private int addNonEmptyString(String input) throws NegativesException {
-        String delimiter = "[,\n]";
+        String[] delimiters;
         String expression = input;
 
         if (input.startsWith("//")) {
             String[] inputArr = input.split("\n");
-//            delimiter = extractor.generateCustomDelimiterRegex(inputArr[0]);
+            delimiters = extractor.getDelimitersFromExpression(inputArr[0]);
             expression = inputArr[1];
+        } else {
+            delimiters = new String[] {",", "\n"};
         }
 
-        var expressionArr = expression.split(delimiter);
+        var numbers = parser.getNumbersFromExpression(delimiters, expression);
 
-        return addArrayOfStrings(expressionArr);
+        return sum(numbers);
     }
 
-    private int addArrayOfStrings(String[] expressionArr) {
+    private int sum(int[] numbers) {
         int sum = 0;
 
-        for (String s : expressionArr) {
-            int number = Integer.parseInt(s);
-
-            if (number < 0) {
-                throw new NegativesException("Negatives not allowed: " + number);
-            } else if (number < 1000) {
-                sum += number;
+        for (int i : numbers) {
+            if (i < 0) {
+                throw new NegativesException("Negatives not allowed: " + i);
+            } else if (i < 1000) {
+                sum += i;
             }
         }
 

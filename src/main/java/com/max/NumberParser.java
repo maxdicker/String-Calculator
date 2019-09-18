@@ -20,7 +20,7 @@ public class NumberParser {
     public int[] toIntArr(String[] strings) {
         int[] numbers = new int[strings.length];
         for (int i = 0; i < strings.length; i++) {
-            numbers[i] = Integer.parseInt(strings[i]);
+                numbers[i] = Integer.parseInt(strings[i]);
         }
         return numbers;
     }
