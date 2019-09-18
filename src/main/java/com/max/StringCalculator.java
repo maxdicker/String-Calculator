@@ -2,9 +2,11 @@ package com.max;
 
 public class StringCalculator {
     private DelimiterGenerator extractor;
+    private NumberParser parser;
 
     public StringCalculator() {
         this.extractor = new DelimiterGenerator();
+        this.parser = new NumberParser();
     }
 
     public int Add(String input) {
@@ -20,7 +22,7 @@ public class StringCalculator {
 
         if (input.startsWith("//")) {
             String[] inputArr = input.split("\n");
-            delimiter = extractor.generateCustomDelimiterRegex(inputArr[0]);
+//            delimiter = extractor.generateCustomDelimiterRegex(inputArr[0]);
             expression = inputArr[1];
         }
 

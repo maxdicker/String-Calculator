@@ -35,24 +35,4 @@ public class DelimiterGeneratorTest {
         assertEquals("qwerty", delimiters[1]);
     }
 
-    @Test
-    public void canMakeRegexFromBasicDelimiter()
-    {
-        String[] delimiters = {";"};
-        assertEquals("\\Q;\\E", extractor.transformDelimitersToRegex(delimiters));
-    }
-
-    @Test
-    public void canMakeRegexFromLengthyDelimiter()
-    {
-        String[] delimiters = {"***"};
-        assertEquals("\\Q***\\E", extractor.transformDelimitersToRegex(delimiters));
-    }
-
-    @Test
-    public void canMakeRegexFromMultipleDelimiters()
-    {
-        String[] delimiters = {"***", ";", "$1$"};
-        assertEquals("\\Q***\\E|\\Q;\\E|\\Q$1$\\E", extractor.transformDelimitersToRegex(delimiters));
-    }
 }
