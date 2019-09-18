@@ -2,7 +2,7 @@ package com.max;
 
 public class NumberParser {
 
-    public int[] getNumbers(String[] delimiters, String expression) {
+    public int[] getNumbersFromExpression(String[] delimiters, String expression) {
         String regex = transformDelimitersToRegex(delimiters);
         return toIntArr(expression.split(regex));
     }

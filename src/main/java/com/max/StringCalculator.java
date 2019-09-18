@@ -1,11 +1,11 @@
 package com.max;
 
 public class StringCalculator {
-    private DelimiterGenerator extractor;
+    private DelimiterExtractor extractor;
     private NumberParser parser;
 
     public StringCalculator() {
-        this.extractor = new DelimiterGenerator();
+        this.extractor = new DelimiterExtractor();
         this.parser = new NumberParser();
     }
 
