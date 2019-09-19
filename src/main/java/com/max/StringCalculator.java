@@ -1,14 +1,17 @@
 package com.max;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class StringCalculator {
     private DelimiterExtractor extractor;
     private NumberParser parser;
+    private String[] defaultDelimiters;
 
     public StringCalculator() {
         this.extractor = new DelimiterExtractor();
         this.parser = new NumberParser();
+        this.defaultDelimiters = new String[] {",", "\n"};
     }
 
     public int Add(String input) {
@@ -29,25 +32,6 @@ public class StringCalculator {
         return sum(numbers);
     }
 
-    private void throwExceptionIfContainsNegatives(int[] numbers) {
-        ArrayList<Integer> negativeNumbers = getNegatives(numbers);
-        if (!negativeNumbers.isEmpty()) {
-            throw new NegativesException("Negatives not allowed: " + negativeNumbers.toString().substring(1, negativeNumbers.toString().length()-1));
-        }
-    }
-
-    private int sum(int[] numbers) {
-        int sum = 0;
-
-        for (int i : numbers) {
-            if (i < 1000) {
-                sum += i;
-            }
-        }
-
-        return sum;
-    }
-
     private String getExpression(String input) {
         if (input.startsWith("//")) {
             String[] inputArr = input.split("\n");
@@ -62,7 +46,20 @@ public class StringCalculator {
             String[] inputArr = input.split("\n");
             return extractor.getDelimitersFromExpression(inputArr[0]);
         } else {
-            return new String[] {",", "\n"};
+            return defaultDelimiters;
+        }
+    }
+
+    private void throwExceptionIfContainsNegatives(int[] numbers) {
+        ArrayList<Integer> negNumbers = getNegatives(numbers);
+        StringJoiner negNumbersSJ = new StringJoiner(", ");
+
+        for (Integer i : negNumbers) {
+            negNumbersSJ.add(i.toString());
+        }
+
+        if (!negNumbers.isEmpty()) {
+            throw new NegativesException("Negatives not allowed: " + negNumbersSJ);
         }
     }
 
@@ -74,6 +71,18 @@ public class StringCalculator {
             }
         }
         return negatives;
+    }
+
+    private int sum(int[] numbers) {
+        int sum = 0;
+
+        for (int i : numbers) {
+            if (i < 1000) {
+                sum += i;
+            }
+        }
+
+        return sum;
     }
 
 }
