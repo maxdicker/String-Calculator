@@ -1,5 +1,7 @@
 package com.max;
 
+import java.util.ArrayList;
+
 public class StringCalculator {
     private DelimiterExtractor extractor;
     private NumberParser parser;
@@ -17,35 +19,61 @@ public class StringCalculator {
     }
 
     private int addNonEmptyString(String input) throws NegativesException {
-        String[] delimiters;
-        String expression;
-
-        if (input.startsWith("//")) {
-            String[] inputArr = input.split("\n");
-            delimiters = extractor.getDelimitersFromExpression(inputArr[0]);
-            expression = inputArr[1];
-        } else {
-            delimiters = new String[] {",", "\n"};
-            expression = input;
-        }
+        String[] delimiters = getDelimiters(input);
+        String expression = getExpression(input);
 
         int[] numbers = parser.getNumbersFromExpression(delimiters, expression);
 
+        throwExceptionIfContainsNegatives(numbers);
+
         return sum(numbers);
+    }
+
+    private void throwExceptionIfContainsNegatives(int[] numbers) {
+        ArrayList<Integer> negativeNumbers = getNegatives(numbers);
+        if (!negativeNumbers.isEmpty()) {
+            throw new NegativesException("Negatives not allowed: " + negativeNumbers.toString().substring(1, negativeNumbers.toString().length()-1));
+        }
     }
 
     private int sum(int[] numbers) {
         int sum = 0;
 
         for (int i : numbers) {
-            if (i < 0) {
-                throw new NegativesException("Negatives not allowed: " + i);
-            } else if (i < 1000) {
+            if (i < 1000) {
                 sum += i;
             }
         }
 
         return sum;
+    }
+
+    private String getExpression(String input) {
+        if (input.startsWith("//")) {
+            String[] inputArr = input.split("\n");
+            return inputArr[1];
+        } else {
+            return input;
+        }
+    }
+
+    private String[] getDelimiters(String input) {
+        if (input.startsWith("//")) {
+            String[] inputArr = input.split("\n");
+            return extractor.getDelimitersFromExpression(inputArr[0]);
+        } else {
+            return new String[] {",", "\n"};
+        }
+    }
+
+    private ArrayList<Integer> getNegatives(int[] numbers) {
+        ArrayList<Integer> negatives = new ArrayList<>();
+        for (int i : numbers) {
+            if (i < 0) {
+                negatives.add(i);
+            }
+        }
+        return negatives;
     }
 
 }

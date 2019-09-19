@@ -56,6 +56,17 @@ public class StringCalculatorTest {
     }
 
     @Test
+    public void testAddMethodQuotesAllNegativeInputs()
+    {
+        StringCalculator calculator = new StringCalculator();
+        try {
+            calculator.Add("-1,2,-3");
+        } catch (NegativesException e) {
+            assertEquals("Negatives not allowed: -1, -3", e.getMessage());
+        }
+    }
+
+    @Test
     public void testAddMethodIgnoresNumbersGreaterThan999()
     {
         StringCalculator calculator = new StringCalculator();
